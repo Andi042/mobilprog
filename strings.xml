@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Alarm</string>
+    <string name="app_label">Reminder</string>
+    <string-array name="occurence">
+        <item>Once</item>
+        <item>Weekly</item>
+    </string-array>
+    <string-array name="pref_alarm_play_time_entries">
+        <item>10 sec</item>
+        <item>30 sec</item>
+        <item>1 min</item>
+        <item>2 min</item>
+        <item>3 min</item>
+        <item>5 min</item>
+    </string-array>
+    <string-array name="pref_alarm_play_time_values">
+        <item>10</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>180</item>
+        <item>300</item>
+    </string-array>
+    <string name="menu_item_new">New</string>
+    <string name="menu_item_save">Save</string>
+    <string name="menu_item_delete">Cancel</string>
+</resources>
+
+<resources>
+    <string name="app_name">Ébresztő</string>
+    <string name="app_label">Emlékeztető</string>
+    <string-array name="occurence">
+        <item>Egyszeri</item>
+        <item>Heti</item>
+    </string-array>
+    <string-array name="pref_alarm_play_time_entries">
+        <item>10 mp.</item>
+        <item>30 mp.</item>
+        <item>1 p.</item>
+        <item>2 p.</item>
+        <item>3 p.</item>
+        <item>5 p.</item>
+    </string-array>
+    <string-array name="pref_alarm_play_time_values">
+        <item>10</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>180</item>
+        <item>300</item>
+    </string-array>
+    <string name="menu_item_new">Új</string>
+    <string name="menu_item_save">Mentés</string>
+    <string name="menu_item_delete">Mégse</string>
+</resources>
