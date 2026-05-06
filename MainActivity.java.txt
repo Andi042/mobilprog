@@ -1,0 +1,124 @@
+package com.example.egbinj_nagyzh;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+
+    Button ok;
+    EditText emailET, pwET, pwAgainET;
+    String email;
+    String pw;
+    String pwagain;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        emailET=findViewById(R.id.emailET);
+
+        pwET=findViewById(R.id.passwordET);
+        pwAgainET=findViewById(R.id.pwAgainET);
+
+        ok=findViewById(R.id.okBtn);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = emailET.getText().toString().trim();
+                String pw = pwET.getText().toString();
+                String pwagain = pwAgainET.getText().toString();
+
+                if (!pw.equals(pwagain)) {
+                    Toast.makeText(MainActivity.this, "A két jelszó nem egyezik!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (existsEmail(email)) {
+                    Toast.makeText(MainActivity.this, "Az email már regisztrálva van", Toast.LENGTH_SHORT).show();
+                } else {
+                    writeToInternalStorage(MainActivity.this, "emails.txt", email + "\n");
+                    Toast.makeText(MainActivity.this, "Sikeres regisztráció", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(MainActivity.this, MainActivity2.class);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
+    boolean existsEmail(String e){
+        String emails=readFromInternalStorage(MainActivity.this, "emails.txt");
+        String[] lines = emails.split("\n");
+
+        for (int i = 0; i < lines.length; i++) {
+            if(lines[i].equals(e)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    public void writeToInternalStorage(Context context, String fileName, String data) {
+        FileOutputStream fos = null;
+        try {
+            fos = context.openFileOutput(fileName, Context.MODE_APPEND);
+            fos.write(data.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public String readFromInternalStorage(Context context, String fileName) {
+        FileInputStream fis = null;
+        StringBuilder sb = new StringBuilder();
+        try {
+            fis = context.openFileInput(fileName);
+            int ch;
+            while ((ch = fis.read()) != -1) {
+                sb.append((char) ch);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb.toString(); }
+
+
+
+}
